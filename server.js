@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, "views")));
 
@@ -28,6 +28,7 @@ app.get("/contact", (req, res) => {
 app.get("/chat", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "chat.html"));
 });
+
 // Socket.IO connection handling
 io.on("connection", (socket) => {
   console.log("A user connected");
@@ -47,5 +48,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
