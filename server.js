@@ -20,8 +20,8 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "about.html"));
 });
 
-app.get("/contact", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "contact.html"));
+app.get("/usapdodoi", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "usaptayododoi.html"));
 });
 
 // Serve chat interface for another route
