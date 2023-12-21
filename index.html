@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Webcam</title>
+    <style>
+      #videoElement {
+        width: 100%;
+        max-width: 640px;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="videoElement" autoplay></video>
+    <script>
+      // Check for modern mediaDevices.getUserMedia support
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then(function (stream) {
+            // Success: handle stream
+            const video = document.getElementById("videoElement");
+            video.srcObject = stream;
+          })
+          .catch(function (error) {
+            // Error: handle error
+            console.error("Error accessing the camera:", error);
+          });
+      } else if (navigator.getUserMedia || navigator.webkitGetUserMedia) {
+        // For older browsers supporting legacy getUserMedia
+        const getUserMedia =
+          navigator.getUserMedia || navigator.webkitGetUserMedia;
+        getUserMedia.call(
+          navigator,
+          { video: true },
+          function (stream) {
+            const video = document.getElementById("videoElement");
+            video.src = window.URL.createObjectURL(stream);
+          },
+          function (error) {
+            console.error("Error accessing the camera:", error);
+          }
+        );
+      } else {
+        console.error("getUserMedia is not supported on your browser");
+      }
+    </script>
+  </body>
+</html>
